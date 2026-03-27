@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Result Generator PRO - Partai Togel</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:wght@400;700&display=swap');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), 
+                              url('https://images.unsplash.com/photo-1510784722466-f2aa9c52fff6?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2.8rem;
+            color: #fff;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+            margin-bottom: 10px;
+        }
+
+        .marquee-container {
+            width: 100%;
+            max-width: 1200px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid crimson;
+            overflow: hidden;
+            margin: 0 auto 20px auto;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .marquee-text {
+            white-space: nowrap;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: gold;
+            padding-left: 100%;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pasaran-wrapper {
+            flex: 0 0 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pasaran-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+            background: rgba(0,0,0,0.8);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid crimson;
+            color: gold;
+            font-size: 0.85rem;
+        }
+
+        #searchPasaran {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.7);
+            color: white;
+            font-weight: bold;
+        }
+
+        .pasaran-list {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 10px;
+            max-height: 65vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .pasaran-list button {
+            display: block; width: 100%; margin-bottom: 5px; padding: 10px;
+            background: rgba(0,0,0,0.5); color: #fff;
+            border: 1px solid rgba(255,255,255,0.1); cursor: pointer; border-radius: 5px;
+            text-align: left; font-weight: bold; transition: 0.3s;
+        }
+
+        .pasaran-list button:hover, .pasaran-list button.active {
+            background: crimson; transform: translateX(5px); border-left: 5px solid gold;
+        }
+
+        .hasil-wrapper { flex: 1; min-width: 400px; }
+
+        .card {
+            background: rgba(0,0,0,0.85);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid crimson;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .mode-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .mode-btn {
+            flex: 1; padding: 12px; border: 1px solid crimson;
+            background: #111; color: gold; font-weight: bold;
+            cursor: pointer; border-radius: 5px; transition: 0.3s;
+        }
+        .mode-btn.active { background: crimson; color: white; box-shadow: 0 0 10px crimson; }
+
+        .input-container {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .grid-inputs { display: flex; gap: 10px; }
+        .input-field { flex: 1; text-align: center; }
+        .input-field label { display: block; font-size: 11px; color: gold; margin-bottom: 5px; font-weight: bold; }
+
+        input.num-input {
+            width: 100%; padding: 12px; background: #000;
+            border: 1px solid #0ca2bf; color: #00ffcc;
+            font-weight: bold; font-size: 1.5rem; text-align: center; border-radius: 5px;
+        }
+
+        .output-box {
+            background: #fff; color: #111; padding: 25px;
+            border-radius: 5px; font-family: 'Courier New', Courier, monospace;
+            font-weight: 900; font-size: 1.3rem; line-height: 1.5;
+            min-height: 250px; white-space: pre-wrap; border-left: 10px solid crimson;
+        }
+
+        .btn-salin {
+            width: 100%; margin-top: 20px; padding: 18px;
+            background: linear-gradient(to bottom, #ffd700, #ffa500);
+            border: none; color: #000; font-family: 'Archivo Black', sans-serif;
+            font-size: 1.1rem; border-radius: 8px; cursor: pointer;
+            box-shadow: 0 5px 0 #b37700; transition: 0.2s;
+        }
+
+        .btn-salin:active { transform: translateY(3px); box-shadow: none; }
+
+        .hidden { display: none; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: crimson; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<h1>RESULT PARTAI TOGEL</h1>
+
+<div class="marquee-container">
+    <div class="marquee-text">
+        Selamat datang di Generator Result Partai Togel — Gunakan fitur Shio otomatis untuk mempermudah pekerjaan anda — Salam JP Paus untuk seluruh CS setia kami!
+    </div>
+</div>
+
+<div class="container">
+    <div class="pasaran-wrapper">
+        <div class="pasaran-header">
+            <div id="fullDateDisplay">-- -- ----</div>
+            <div id="jam">00:00:00</div>
+        </div>
+        <input type="text" id="searchPasaran" placeholder="🔍 Cari Nama Pasaran...">
+        <div class="pasaran-list" id="listPasaran"></div>
+    </div>
+
+    <div class="hasil-wrapper">
+        <div class="card">
+            <div class="mode-tabs">
+                <button class="mode-btn active" id="btnMode3" onclick="switchMode('mode3')">MODE PRIZE 123</button>
+                <button class="mode-btn" id="btnMode1" onclick="switchMode('mode1')">MODE RESULT TUNGGAL</button>
+            </div>
+
+            <div id="containerMode3" class="input-container">
+                <div class="grid-inputs">
+                    <div class="input-field"><label>PRIZE 1</label><input type="text" class="num-input" id="p1" maxlength="5" placeholder="0000" oninput="generateResult()"></div>
+                    <div class="input-field"><label>PRIZE 2</label><input type="text" class="num-input" id="p2" maxlength="5" placeholder="0000" oninput="generateResult()"></div>
+                    <div class="input-field"><label>PRIZE 3</label><input type="text" class="num-input" id="p3" maxlength="5" placeholder="0000" oninput="generateResult()"></div>
+                </div>
+            </div>
+
+            <div id="containerMode1" class="input-container hidden">
+                <div class="input-field" style="max-width: 250px; margin: 0 auto;">
+                    <label>MASUKKAN NOMOR RESULT</label>
+                    <input type="text" class="num-input" id="resSingle" maxlength="5" placeholder="0000" oninput="generateResult()">
+                </div>
+            </div>
+
+            <div class="output-box" id="hasilFinal">Pilih pasaran di kiri...</div>
+            <button class="btn-salin" onclick="salinTeks()">COPY RESULT JP</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateClock(){
+        const now = new Date();
+        document.getElementById('jam').textContent = now.toLocaleTimeString('id-ID');
+        // Format Hari, Tanggal Bulan Tahun
+        const options = { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' };
+        document.getElementById('fullDateDisplay').textContent = now.toLocaleDateString('id-ID', options);
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    const semuaPasaran = [
+        "HOKI DRAW","TOTO MACAU PAGI","HUAHIN 0100","BANGKOK 0130","KENTUCKYMID","FLORIDA MIDDAY","NEW YORK MIDDAY",
+        "BRUNEI 02","CAROLINA DAY","OREGON03","OREGON06","BANGKOK 0930","CALIFORNIA","FLORIDAEVE","OREGON09",
+        "NEWYORKEVE","KENTUCKYEVE","TOTO CAMBODIA","CHELSEA 11","CAROLINAEVE","BULLSEYE","POIPET12","OREGON12",
+        "TOTOMACAU SIANG","SYDNEY","JAKARTA1400","BRUNEI 14","CHELSEA 15","TOTOMALI 1530",
+        "POIPET15","TOTOMACAU SORE","HUAHIN 1630","KING KONG 4D","SINGAPORE","MAGNUM4D","TOTOMACAU MALAM-I",
+        "CHELSEA 19","POIPET19","PCSO","TOTOMALI 2030","HUAHIN 2100","CHELSEA 21","TOTOMACAU 5D SORE","NEVADA",
+        "BRUNEI 21","TOTOMACAU MALAM-II","POIPET22","HONGKONG","TOTOMACAU MALAM-III","TOTOMALI 2330","JAKARTA2330","KING KONG 4D",
+        "TOTOMACAU 5D MALAM"
+    ];
+
+    const pasaran5D = ["TOTOMACAU 5D SORE", "TOTOMACAU 5D MALAM"];
+    const shioList = ["Kuda", "Ular", "Naga", "Kelinci", "Harimau", "Kerbau", "Tikus", "Babi", "Anjing", "Ayam", "Monyet", "Kambing"];
+    
+    let pasaranTerpilih = "HOKI DRAW";
+    let modeAktif = 'mode3';
+
+    function switchMode(mode) {
+        modeAktif = mode;
+        document.getElementById('btnMode3').classList.toggle('active', mode === 'mode3');
+        document.getElementById('btnMode1').classList.toggle('active', mode === 'mode1');
+        document.getElementById('containerMode3').classList.toggle('hidden', mode !== 'mode3');
+        document.getElementById('containerMode1').classList.toggle('hidden', mode !== 'mode1');
+        generateResult();
+    }
+
+    const listContainer = document.getElementById('listPasaran');
+    semuaPasaran.forEach((p, idx) => {
+        const btn = document.createElement('button');
+        btn.textContent = "🎯 " + p;
+        if(idx === 0) btn.classList.add('active');
+        btn.onclick = () => {
+            pasaranTerpilih = p;
+            document.querySelectorAll('.pasaran-list button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const is5D = pasaran5D.includes(p);
+            document.querySelectorAll('.num-input').forEach(input => {
+                input.maxLength = is5D ? 5 : 4;
+                input.placeholder = is5D ? "00000" : "0000";
+            });
+            generateResult();
+        };
+        listContainer.appendChild(btn);
+    });
+
+    function getShio(numStr) {
+        if (!numStr || numStr.length < 2) return "...";
+        const n2D = parseInt(numStr.slice(-2));
+        if (isNaN(n2D)) return "...";
+        let idx = (n2D - 1) % 12;
+        if (idx < 0) idx = 11; 
+        return shioList[idx];
+    }
+
+    function generateResult() {
+        // Ambil hari dan tanggal otomatis
+        const dateText = document.getElementById('fullDateDisplay').textContent;
+        let teks = "";
+
+        if (modeAktif === 'mode3') {
+            const v1 = document.getElementById('p1').value || "....";
+            const v2 = document.getElementById('p2').value || "....";
+            const v3 = document.getElementById('p3').value || "....";
+            const shio = getShio(v1);
+            teks = `Hasil pengeluaran ${pasaranTerpilih}\nHari ${dateText}\n\nPRIZE 1 : ${v1}, SHIO : ${shio}\nPRIZE 2 : ${v2}\nPRIZE 3 : ${v3}\n\nSelamat Kepada Pemenang, Salam JP`;
+        } else {
+            const vSingle = document.getElementById('resSingle').value || "....";
+            const shio = getShio(vSingle);
+            teks = `Hasil Pengeluaran ${pasaranTerpilih}\nHari ${dateText}\n\nResult : ${vSingle}\nSHIO : ${shio}\n\nSelamat Kepada Pemenang, Salam JP`;
+        }
+        document.getElementById('hasilFinal').innerText = teks;
+    }
+
+    function salinTeks() {
+        const teks = document.getElementById('hasilFinal').innerText;
+        navigator.clipboard.writeText(teks).then(() => alert("Berhasil Disalin!"));
+    }
+
+    document.getElementById('searchPasaran').addEventListener('input', function(e) {
+        const filter = e.target.value.toLowerCase();
+        document.querySelectorAll('.pasaran-list button').forEach(btn => {
+            btn.style.display = btn.textContent.toLowerCase().includes(filter) ? "block" : "none";
+        });
+    });
+
+    generateResult();
+</script>
+
+</body>
+</html>
